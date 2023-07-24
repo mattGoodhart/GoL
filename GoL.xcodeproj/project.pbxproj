@@ -12,6 +12,7 @@
 		A2FECF522A6989D500930BE0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2FECF512A6989D500930BE0 /* Assets.xcassets */; };
 		A2FECF552A6989D500930BE0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2FECF542A6989D500930BE0 /* Preview Assets.xcassets */; };
 		A2FECF5C2A6B6E6100930BE0 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FECF5B2A6B6E6100930BE0 /* Model.swift */; };
+		A2FECF5E2A6E000600930BE0 /* Square.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FECF5D2A6E000600930BE0 /* Square.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		A2FECF512A6989D500930BE0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A2FECF542A6989D500930BE0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A2FECF5B2A6B6E6100930BE0 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		A2FECF5D2A6E000600930BE0 /* Square.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Square.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 				A2FECF4D2A6989D400930BE0 /* GoLApp.swift */,
 				A2FECF4F2A6989D400930BE0 /* ContentView.swift */,
 				A2FECF5B2A6B6E6100930BE0 /* Model.swift */,
+				A2FECF5D2A6E000600930BE0 /* Square.swift */,
 				A2FECF512A6989D500930BE0 /* Assets.xcassets */,
 				A2FECF532A6989D500930BE0 /* Preview Content */,
 			);
@@ -140,6 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2FECF5E2A6E000600930BE0 /* Square.swift in Sources */,
 				A2FECF5C2A6B6E6100930BE0 /* Model.swift in Sources */,
 				A2FECF502A6989D400930BE0 /* ContentView.swift in Sources */,
 				A2FECF4E2A6989D400930BE0 /* GoLApp.swift in Sources */,

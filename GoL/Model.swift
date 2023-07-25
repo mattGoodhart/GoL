@@ -10,20 +10,21 @@ import SwiftUI
 class Model: ObservableObject {
     
     static let shared = Model()
-    var liveStartingSquares: [Square] = [] // these are the squares chosen by the user before starting the game
     
-    @Published var squareArray: [Square] = []
-    @Published var gameState: GameState  = .ready
-    @Published var iterationNumber: Int = 0
+    var liveStartingSquares: [Square] = [] //the squares chosen by the user before starting the game
+    
+    @Published var squareArray: [Square] = [] // The array sent to the UI at the end of iteration. Updating this should trigger a grid redraw but doesnt seem to.
+    @Published var gameState: GameState  = .ready //Updating this should update button states and text in UI
+    @Published var iterationNumber: Int = 0 // Updating should increment the generation counter. may not be necessary to publish? since it will change with squareArray
     
     func startGame() {
         
         gameState = .running
         
-        for _ in (0..<9999) {
-            guard gameState != .ready else {
-                return
-            }
+        for _ in (0..<9999) { //Make this look more like an autosave
+            //            guard gameState != .ready else {
+            //                return
+            //            }
             iterate()
             sleep(500)
             iterationNumber += 1
@@ -50,105 +51,97 @@ class Model: ObservableObject {
     
     func resetGame() {
         liveStartingSquares = []
+        squareArray = readyArrayOfSquares()
         gameState = .ready
         iterationNumber = 0
     }
     
     
     func iterate() {
-        let readyArray: [Square] = readyArrayOfSquares()
-        var bufferArrayOfSquares: [Square] = []
-        var updatedArrayOfSquares: [Square] = []
-        var livingSquaresAfterUpdate: [Square] = []
-      //  var neighborMap: [: [Square]]
+    
+        var bufferArrayOfSquares: [Square] = [] //the array of Squares to process
+        var updatedArrayOfSquares: [Square] = [] //Squares after processing
+        var livingSquaresAfterUpdate: [Square] = [] //the living Squares after last iteration
         
+        // if game is just beginning use ready array, if in progress, use last squareArray for buffer
+//        if gameState == .ready {
+//            bufferArrayOfSquares = readyArrayOfSquares()
+//            gameState = .running
+//        } else {
+            bufferArrayOfSquares = squareArray
+      //  }
         
-        // if game is just beginning use ready array, if in progress, use last bufferArray
-        if gameState == .ready {
-            bufferArrayOfSquares = readyArray
-            gameState = .running
-        } else {
-            bufferArrayOfSquares = updatedArrayOfSquares
-        }
-        
-      //  let liveSquaresInModelAtBeginningOfIteration = bufferArrayOfSquares.filter { $0.isAlive == true } // I'm misusing filter?
-        // For all Squares:
-        //first, generate a grid based on initial squares.. map or filter
-        guard !liveStartingSquares.isEmpty else {
-            print("Live Starting Squares not Found, resetting")
-            resetGame()
-            return
-        }
-        
-        for startingSquare in liveStartingSquares {
-            if let index = bufferArrayOfSquares.firstIndex(where: {($0.xPosition == startingSquare.xPosition) && ($0.yPosition == startingSquare.yPosition)}) {
-                bufferArrayOfSquares[index] = Square(xPosition: startingSquare.xPosition, yPosition: startingSquare.yPosition, isAlive: true)
+        if iterationNumber == 0 {
+            guard !liveStartingSquares.isEmpty else {
+                print("Live Starting Squares not Found, resetting")
+                resetGame()
+                return
             }
         }
-
-        //at this point, bufferArrayOfSquares represents the grid after user input. so good.
-        var aliveNeighborsArray: [Int] = []
+        gameState = .iterating
+        
+        if iterationNumber == 0 {
+            for startingSquare in liveStartingSquares {
+                if let index = bufferArrayOfSquares.firstIndex(where: {($0.xPosition == startingSquare.xPosition) && ($0.yPosition == startingSquare.yPosition)}) {
+                    bufferArrayOfSquares[index] = Square(xPosition: startingSquare.xPosition, yPosition: startingSquare.yPosition, isAlive: true)
+                }
+            }
+        }
+        
+        var aliveNeighborsArray: [Square] = []
         
         for square in bufferArrayOfSquares {
-            let aliveNeighbors = liveStartingSquares.filter { $0.isNeighbor(to: square) } // alive neighbors might be blank
-            aliveNeighborsArray.append(aliveNeighbors.count) // for debugging
-            switch (square.isAlive, aliveNeighbors.count) { //seems switch always hits default
+            if iterationNumber == 0 {
+                aliveNeighborsArray = liveStartingSquares.filter { $0.isNeighbor(to: square) }
+            } else {
+                //check for neighbors of last iteration
+                let aliveFromLastIteration = squareArray.filter { $0.isAlive }//lastIterationSquares.filter { $0.isAlive }
+                aliveNeighborsArray = aliveFromLastIteration.filter { $0.isNeighbor(to: square) }
+            }
+            
+            switch (square.isAlive, aliveNeighborsArray.count) { //seems switch always hits default
                 
                 // Any live cell with two or three live neighbors lives on to the next generation.
             case (true, 2), (true, 3):
-                print("Square (\(square.xPosition), \(square.yPosition)) survived.")
+              //  print("Square (\(square.xPosition), \(square.yPosition)) survived.")
                 updatedArrayOfSquares.append(square)
                 livingSquaresAfterUpdate.append(square)
+                
                 //Any dead cell with exactly 3 live neighbors becomes a live cell, as if by reproduction.
             case (false, 3):
-                print("Square (\(square.xPosition), \(square.yPosition)) was born.")
+             //   print("Square (\(square.xPosition), \(square.yPosition)) was born.")
                 let newSquare = Square(xPosition: square.xPosition, yPosition: square.yPosition, isAlive: true)
-                
-                //square.isAlive = true
                 updatedArrayOfSquares.append(newSquare)
                 livingSquaresAfterUpdate.append(newSquare)
+                
                 //All other live cells die in the next generation. All other dead cells stay dead.
             default:
-                print("Square (\(square.xPosition), \(square.yPosition)) is dead.")
+              //  print("Square (\(square.xPosition), \(square.yPosition)) is dead.")
                 if square.isAlive {
                     let newSquare = Square(xPosition: square.xPosition, yPosition: square.yPosition, isAlive: false)
-                  //  square.isAlive.toggle()
                     updatedArrayOfSquares.append(newSquare)
                 } else {
                     updatedArrayOfSquares.append(square)
                 }
             }
-            /*
-             
-             if square.isAlive && (aliveNeighbors.count == 2 || aliveNeighbors.count == 3) {
-             print("Square (\(square.xPosition), \(square.yPosition)) survived.")
-             updatedArrayOfSquares.append(square)
-             livingSquaresAfterUpdate.append(square)
-             
-             //Any dead cell with exactly 3 live neighbors becomes a live cell, as if by reproduction.
-             } else if !square.isAlive && aliveNeighbors.count == 3 {
-             print("Square (\(square.xPosition), \(square.yPosition)) was born.")
-             square.isAlive = true
-             updatedArrayOfSquares.append(square)
-             livingSquaresAfterUpdate.append(square)
-             
-             
-             
-             //All other live cells die in the next generation. All other dead cells stay dead.
-             } else {
-             //  print("Square (\(square.xPosition), \(square.yPosition)) is dead.")
-             guard square.isAlive == false else {
-             print("Square (\(square.xPosition), \(square.yPosition)) stays dead.")
-             updatedArrayOfSquares.append(square)
-             return
-             }
-             print("Square (\(square.xPosition), \(square.yPosition)) dies.")
-             square.isAlive = false
-             updatedArrayOfSquares.append(square)
-             
-             } */
         }
-        // livingSqauresAfterUpdate is choosing the correct squares, but they are not getting activated?
+        // DEBUG
+        var positionsOfLivingSquaresAfterUpdate: [String] = []
+        for square in livingSquaresAfterUpdate {
+            positionsOfLivingSquaresAfterUpdate.append("(\(square.xPosition), \(square.yPosition))")
+        }
+        print(positionsOfLivingSquaresAfterUpdate)
+        // End of DEBUG... why isn't my view updating beyond first iteration?
+        
+       
+       // objectWillChange.send()
+       // DispatchQueue.main.async {
+            self.squareArray = updatedArrayOfSquares
+      //  }
+        
+        iterationNumber += 1
+       // print("View Should Update")
+        
         let isGameOver: Bool = livingSquaresAfterUpdate.count == 0
         
         if isGameOver {
@@ -157,23 +150,14 @@ class Model: ObservableObject {
             gameState = .stopped
         }
         
-        //updatedArrayOfSquares seems to be returning an unltered array still
-        
-        squareArray = updatedArrayOfSquares
-        // after all squares processed:
-        //check if game is over
-        //transform the array / set into GridItems that can be used in the UI
-        
-        
-        
-        
     }
 }
 
-enum GameState {
-    case ready
-    case running
-    case stopped
+enum GameState: String {
+    case ready = "Ready"
+    case running = "Running"
+    case iterating = "Iterating"
+    case stopped = "Stopped"
 }
 
 

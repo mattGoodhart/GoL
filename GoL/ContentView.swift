@@ -7,55 +7,33 @@
 
 import SwiftUI
 
-struct GameGrid: View {
-    
-    let activeGrid: [Square] = []
-    var gameState: GameState = Model.shared.gameState
-    
-    var rowsCount = 10
-    var columnsCount = 10
-    var squares: [Square] = Model.shared.squareArray
-    
-    // @State var startingSquares make this a small array of points
-    
-    var body: some View {
-        
-        if gameState == .stopped {
-            Grid(alignment: .topLeading, horizontalSpacing: 0, verticalSpacing: 0) {
-                ForEach(0..<rowsCount, id: \.self) { row in
-                    GridRow(alignment: .firstTextBaseline) {
-                        ForEach(0..<columnsCount, id: \.self) { column in
-                            squares.first { $0.xPosition == row && $0.yPosition == column }
-                            
-                            
-                            //call each square from the array
-                            
-                           // Square(xPosition: row, yPosition: column)
-                            
-                        }
-                    }
-                }
-            }
-        }
-        else {
-            Grid(alignment: .topLeading, horizontalSpacing: 0, verticalSpacing: 0) {
-                ForEach(0..<rowsCount, id: \.self) { row in
-                    GridRow(alignment: .firstTextBaseline) {
-                        ForEach(0..<columnsCount, id: \.self) { column in
-                            Square(xPosition: row, yPosition: column)
-                        }
-                    }
-                }
-            }
-            
-        }
-    }
-}
+
 
 struct ContentView: View {
+    init( _ codeToExec: () -> () ) {
+        codeToExec()
+    }
     
-    @StateObject private var viewModel = Model.shared
-        
+    @ObservedObject var viewModel: Model = Model.shared
+    
+    
+   // var squares = Model.shared.squareArray
+ //   var gameState = Model.shared.gameState
+    
+    var instructionalText: String {
+        switch viewModel.gameState {
+        case .ready:
+            return "Please enter a pattern, then press start or advance"
+        case .running:
+            return  "Game Running"
+        case .stopped, .iterating:
+            return "Game Paused"
+        }
+    }
+    
+    var row = 10
+    var column = 10
+    
     var body: some View {
         
         NavigationView {
@@ -63,14 +41,51 @@ struct ContentView: View {
                 LinearGradient(colors: [Color("MercuryLime"), .white], startPoint: .topLeading, endPoint: .bottomTrailing)
                     .ignoresSafeArea()
                 VStack(alignment: .center) {
+                    Text(viewModel.gameState.rawValue)
                     Spacer()
-                    if viewModel.gameState == .ready {
-                        Text("Please enter a pattern, then press start or advance")
-                    } else {
-                        Spacer() // need a more fluid way of controlling grid position
-                    }
+                    Text(instructionalText)
                     Spacer()
-                    GameGrid()
+                    
+                    Text("\(viewModel.iterationNumber)")
+                    
+                    // GameGrid()
+                    
+//                    switch viewModel.gameState {
+//                    case  .stopped:
+                        Grid(alignment: .topLeading, horizontalSpacing: 0, verticalSpacing: 0) {
+                            ForEach(0..<10, id: \.self) { [viewModel] row in
+                                GridRow(alignment: .firstTextBaseline) {
+                                    ForEach(0..<10, id: \.self) { [viewModel] column in
+                                        viewModel.squareArray.first { $0.xPosition == row && $0.yPosition == column }
+                                    }
+                                }
+                            }
+                        }
+//                    case .ready:
+//                        Grid(alignment: .topLeading, horizontalSpacing: 0, verticalSpacing: 0) {
+//                            ForEach(0..<10, id: \.self) { row in
+//                                GridRow(alignment: .firstTextBaseline) {
+//                                    ForEach(0..<10, id: \.self) { column in
+//                                        Square(xPosition: row, yPosition: column)
+//                                        //viewModel.squareArray.first { $0.xPosition == row && $0.yPosition == column }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    default:
+//                        Grid(alignment: .topLeading, horizontalSpacing: 0, verticalSpacing: 0) {
+//                            ForEach(0..<10, id: \.self) { row in
+//                                GridRow(alignment: .firstTextBaseline) {
+//                                    ForEach(0..<10, id: \.self) { column in
+//                                        viewModel.squareArray.first { $0.xPosition == row && $0.yPosition == column }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+                    
+                    
+                    
                     Spacer()
                     HStack(alignment:.center, spacing: 50 ) { // make spacing a function of device width
                         switch viewModel.gameState {
@@ -82,19 +97,19 @@ struct ContentView: View {
                                 Text("Pause")
                                 Image(systemName: "pause.fill")
                             }
-                        case  .stopped, .ready:
+                        case  .stopped, .ready, .iterating:
                             Button() {
                                 viewModel.startGame()
                                 print("Start Button tapped")
                             }
-                             label: {
-                                Text("Start")
-                                Image(systemName: "play.fill")
-                            }
+                        label: {
+                            Text("Start")
+                            Image(systemName: "play.fill")
+                        }
                         }
                         
                         if (viewModel.gameState != .running) {
-                         
+                            
                             Button() {
                                 viewModel.iterate()
                             } label: {
@@ -122,7 +137,9 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView() {
+            Model.shared.squareArray = Model.shared.readyArrayOfSquares()
+        }
     }
 }
 

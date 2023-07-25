@@ -11,7 +11,9 @@ import SwiftUI
 struct GoLApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView() {
+                Model.shared.squareArray = Model.shared.readyArrayOfSquares() // immediately fill the model with a blank starting array
+            }
         }
     }
 }

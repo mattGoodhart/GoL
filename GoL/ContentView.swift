@@ -51,6 +51,7 @@ struct ContentView: View {
                                 GridRow(alignment: .firstTextBaseline) {
                                     ForEach(0..<10, id: \.self) { [viewModel] column in
                                         viewModel.squareArray.first { $0.xPosition == row && $0.yPosition == column }
+                                            .id(UUID())
                                     }
                                 }
                             }

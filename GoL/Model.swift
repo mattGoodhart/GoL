@@ -58,18 +58,12 @@ class Model: ObservableObject {
     
     
     func iterate() {
-    
+        
         var bufferArrayOfSquares: [Square] = [] //the array of Squares to process
         var updatedArrayOfSquares: [Square] = [] //Squares after processing
         var livingSquaresAfterUpdate: [Square] = [] //the living Squares after last iteration
         
-        // if game is just beginning use ready array, if in progress, use last squareArray for buffer
-//        if gameState == .ready {
-//            bufferArrayOfSquares = readyArrayOfSquares()
-//            gameState = .running
-//        } else {
-            bufferArrayOfSquares = squareArray
-      //  }
+        bufferArrayOfSquares = squareArray // this squareArray is initialized with a blank Square array in GoLApp
         
         if iterationNumber == 0 {
             guard !liveStartingSquares.isEmpty else {
@@ -103,20 +97,20 @@ class Model: ObservableObject {
                 
                 // Any live cell with two or three live neighbors lives on to the next generation.
             case (true, 2), (true, 3):
-              //  print("Square (\(square.xPosition), \(square.yPosition)) survived.")
+                //  print("Square (\(square.xPosition), \(square.yPosition)) survived.")
                 updatedArrayOfSquares.append(square)
                 livingSquaresAfterUpdate.append(square)
                 
                 //Any dead cell with exactly 3 live neighbors becomes a live cell, as if by reproduction.
             case (false, 3):
-             //   print("Square (\(square.xPosition), \(square.yPosition)) was born.")
+                //   print("Square (\(square.xPosition), \(square.yPosition)) was born.")
                 let newSquare = Square(xPosition: square.xPosition, yPosition: square.yPosition, isAlive: true)
                 updatedArrayOfSquares.append(newSquare)
                 livingSquaresAfterUpdate.append(newSquare)
                 
                 //All other live cells die in the next generation. All other dead cells stay dead.
             default:
-              //  print("Square (\(square.xPosition), \(square.yPosition)) is dead.")
+                //  print("Square (\(square.xPosition), \(square.yPosition)) is dead.")
                 if square.isAlive {
                     let newSquare = Square(xPosition: square.xPosition, yPosition: square.yPosition, isAlive: false)
                     updatedArrayOfSquares.append(newSquare)
@@ -133,14 +127,9 @@ class Model: ObservableObject {
         print(positionsOfLivingSquaresAfterUpdate)
         // End of DEBUG... why isn't my view updating beyond first iteration?
         
-       
-       // objectWillChange.send()
-       // DispatchQueue.main.async {
-            self.squareArray = updatedArrayOfSquares
-      //  }
+        squareArray = updatedArrayOfSquares
         
         iterationNumber += 1
-       // print("View Should Update")
         
         let isGameOver: Bool = livingSquaresAfterUpdate.count == 0
         
@@ -149,7 +138,6 @@ class Model: ObservableObject {
         } else {
             gameState = .stopped
         }
-        
     }
 }
 

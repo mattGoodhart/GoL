@@ -10,15 +10,11 @@ import SwiftUI
 
 
 struct ContentView: View {
-    init( _ codeToExec: () -> () ) {
-        codeToExec()
+    init( _ code: () -> () ) { //using this init to allow for immediate execution of readyArrayOfSquares() on Model.shared
+        code()
     }
     
     @ObservedObject var viewModel: Model = Model.shared
-    
-    
-   // var squares = Model.shared.squareArray
- //   var gameState = Model.shared.gameState
     
     var instructionalText: String {
         switch viewModel.gameState {
@@ -50,8 +46,6 @@ struct ContentView: View {
                     
                     // GameGrid()
                     
-//                    switch viewModel.gameState {
-//                    case  .stopped:
                         Grid(alignment: .topLeading, horizontalSpacing: 0, verticalSpacing: 0) {
                             ForEach(0..<10, id: \.self) { [viewModel] row in
                                 GridRow(alignment: .firstTextBaseline) {
@@ -61,34 +55,11 @@ struct ContentView: View {
                                 }
                             }
                         }
-//                    case .ready:
-//                        Grid(alignment: .topLeading, horizontalSpacing: 0, verticalSpacing: 0) {
-//                            ForEach(0..<10, id: \.self) { row in
-//                                GridRow(alignment: .firstTextBaseline) {
-//                                    ForEach(0..<10, id: \.self) { column in
-//                                        Square(xPosition: row, yPosition: column)
-//                                        //viewModel.squareArray.first { $0.xPosition == row && $0.yPosition == column }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    default:
-//                        Grid(alignment: .topLeading, horizontalSpacing: 0, verticalSpacing: 0) {
-//                            ForEach(0..<10, id: \.self) { row in
-//                                GridRow(alignment: .firstTextBaseline) {
-//                                    ForEach(0..<10, id: \.self) { column in
-//                                        viewModel.squareArray.first { $0.xPosition == row && $0.yPosition == column }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-                    
-                    
                     
                     Spacer()
                     HStack(alignment:.center, spacing: 50 ) { // make spacing a function of device width
                         switch viewModel.gameState {
+                            
                         case .running:
                             Button() {
                                 viewModel.gameState = .stopped
@@ -97,15 +68,15 @@ struct ContentView: View {
                                 Text("Pause")
                                 Image(systemName: "pause.fill")
                             }
+                            
                         case  .stopped, .ready, .iterating:
                             Button() {
                                 viewModel.startGame()
                                 print("Start Button tapped")
+                            } label: {
+                                Text("Start")
+                                Image(systemName: "play.fill")
                             }
-                        label: {
-                            Text("Start")
-                            Image(systemName: "play.fill")
-                        }
                         }
                         
                         if (viewModel.gameState != .running) {

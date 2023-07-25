@@ -9,11 +9,11 @@ import SwiftUI
 
 struct Square: View {
     
+    @ObservedObject var viewModel: Model = Model.shared
+    
     let xPosition: Int
     let yPosition: Int
     @State var isAlive: Bool = false
-   // var gameState: GameState = Model.shared.gameState
-    
     
     public func isNeighbor(to square: Square) -> Bool {
         
@@ -40,11 +40,11 @@ struct Square: View {
             .foregroundColor(isAlive == false ? .gray : Color("MercuryLime") )
             .border(.black)
             .onTapGesture {
-              //  if gameState == .ready {
+                if viewModel.gameState == .ready {
                     self.isAlive.toggle()
                     print("Square \(xPosition), \(yPosition) has been tapped and is now \(isAlive == true ? "alive" : "dead")")
-                    Model.shared.liveStartingSquares.append(Square(xPosition: xPosition, yPosition: yPosition, isAlive: true))
-              //  }
+                    viewModel.liveStartingSquares.append(Square(xPosition: xPosition, yPosition: yPosition, isAlive: true))
+                }
             }
     }
 }

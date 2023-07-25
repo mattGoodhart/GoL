@@ -14,6 +14,7 @@
 		A2FECF5C2A6B6E6100930BE0 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FECF5B2A6B6E6100930BE0 /* Model.swift */; };
 		A2FECF5E2A6E000600930BE0 /* Square.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FECF5D2A6E000600930BE0 /* Square.swift */; };
 		A2FECF602A6EF92A00930BE0 /* GameGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FECF5F2A6EF92A00930BE0 /* GameGrid.swift */; };
+		A2FECF622A704FB100930BE0 /* Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FECF612A704FB100930BE0 /* Controls.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		A2FECF5B2A6B6E6100930BE0 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		A2FECF5D2A6E000600930BE0 /* Square.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Square.swift; sourceTree = "<group>"; };
 		A2FECF5F2A6EF92A00930BE0 /* GameGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameGrid.swift; sourceTree = "<group>"; };
+		A2FECF612A704FB100930BE0 /* Controls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controls.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				A2FECF4D2A6989D400930BE0 /* GoLApp.swift */,
+				A2FECF612A704FB100930BE0 /* Controls.swift */,
 				A2FECF4F2A6989D400930BE0 /* ContentView.swift */,
 				A2FECF5F2A6EF92A00930BE0 /* GameGrid.swift */,
 				A2FECF5B2A6B6E6100930BE0 /* Model.swift */,
@@ -147,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2FECF5E2A6E000600930BE0 /* Square.swift in Sources */,
+				A2FECF622A704FB100930BE0 /* Controls.swift in Sources */,
 				A2FECF5C2A6B6E6100930BE0 /* Model.swift in Sources */,
 				A2FECF602A6EF92A00930BE0 /* GameGrid.swift in Sources */,
 				A2FECF502A6989D400930BE0 /* ContentView.swift in Sources */,

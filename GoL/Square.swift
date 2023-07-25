@@ -13,7 +13,7 @@ struct Square: View {
     
     let xPosition: Int
     let yPosition: Int
-    @State var isAlive: Bool = false
+    @State var isAlive: Bool = false // is @State the right binding here, since the Model will also update this property ?
     
     public func isNeighbor(to square: Square) -> Bool {
         

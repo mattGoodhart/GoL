@@ -17,20 +17,21 @@ class Model: ObservableObject {
     @Published var gameState: GameState  = .ready //Updating this should update button states and text in UI
     @Published var iterationNumber: Int = 0 // Updating should increment the generation counter. may not be necessary to publish? since it will change with squareArray
     
-    func startGame() {
-        
-        gameState = .running
-        
-        for _ in (0..<9999) { //Make this look more like an autosave
-            //            guard gameState != .ready else {
-            //                return
-            //            }
-            iterate()
-            sleep(500)
-            iterationNumber += 1
-            
+    var instructionalText: String {
+        switch gameState {
+        case .ready:
+            return "Please enter a pattern, then press start or advance"
+        case .running:
+            return  "Game Running"
+        case .stopped, .iterating:
+            return "Game Paused"
         }
-        // iterate continually unless game comes to an end (all cells dead), or game is reset bhy user
+    }
+    
+    
+    func startGame() {
+     
+ // iterate continually unless game comes to an end (all cells dead), or game is reset bhy user
     }
     
     func readyArrayOfSquares() -> [Square] {
@@ -125,7 +126,7 @@ class Model: ObservableObject {
             positionsOfLivingSquaresAfterUpdate.append("(\(square.xPosition), \(square.yPosition))")
         }
         print(positionsOfLivingSquaresAfterUpdate)
-        // End of DEBUG... why isn't my view updating beyond first iteration?
+        // End of DEBUG
         
         squareArray = updatedArrayOfSquares
         
@@ -134,7 +135,8 @@ class Model: ObservableObject {
         let isGameOver: Bool = livingSquaresAfterUpdate.count == 0
         
         if isGameOver {
-            gameState = .ready
+           // gameState = .ready
+            resetGame()
         } else {
             gameState = .stopped
         }

@@ -3,4 +3,147 @@
    uuid = "92376DED-1B8D-4740-86DB-902DF3949EBD"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8E37AEA7-994D-41A1-80E8-A791D454D772"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GoL/Model.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "138"
+            endingLineNumber = "138"
+            landmarkName = "GameState"
+            landmarkType = "13">
+            <Locations>
+               <Location
+                  uuid = "8E37AEA7-994D-41A1-80E8-A791D454D772 - 99b112c4789d44f9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "GoL.Model.iterate() -&gt; ()"
+                  moduleName = "GoL"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/matthewgoodhart/Desktop/Projects/GoL/GoL/Model.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "176"
+                  endingLineNumber = "176"
+                  offsetFromSymbolStart = "3868">
+               </Location>
+               <Location
+                  uuid = "8E37AEA7-994D-41A1-80E8-A791D454D772 - 99b112c4789d4416"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "GoL.Model.iterate() -&gt; ()"
+                  moduleName = "GoL"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/matthewgoodhart/Desktop/Projects/GoL/GoL/Model.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "177"
+                  endingLineNumber = "177"
+                  offsetFromSymbolStart = "3832">
+               </Location>
+               <Location
+                  uuid = "8E37AEA7-994D-41A1-80E8-A791D454D772 - 99b112c4789d4437"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "GoL.Model.iterate() -&gt; ()"
+                  moduleName = "GoL"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/matthewgoodhart/Desktop/Projects/GoL/GoL/Model.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "178"
+                  endingLineNumber = "178"
+                  offsetFromSymbolStart = "3832">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "25F43D58-0051-45D2-9442-55C97FEBC740"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GoL/Model.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
+            landmarkName = "GameState"
+            landmarkType = "13">
+            <Locations>
+               <Location
+                  uuid = "25F43D58-0051-45D2-9442-55C97FEBC740 - 9aecd173c60a96fc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "GoL.GameState.init(rawValue: Swift.String) -&gt; Swift.Optional&lt;GoL.GameState&gt;"
+                  moduleName = "GoL"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/matthewgoodhart/Desktop/Projects/GoL/GoL/Model.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "181"
+                  endingLineNumber = "181"
+                  offsetFromSymbolStart = "112">
+               </Location>
+               <Location
+                  uuid = "25F43D58-0051-45D2-9442-55C97FEBC740 - e1b6712322d4ef00"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "GoL.GameState.rawValue.getter : Swift.String"
+                  moduleName = "GoL"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/matthewgoodhart/Desktop/Projects/GoL/GoL/Model.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "181"
+                  endingLineNumber = "181"
+                  offsetFromSymbolStart = "84">
+               </Location>
+               <Location
+                  uuid = "25F43D58-0051-45D2-9442-55C97FEBC740 - 99b112c4789d4454"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "GoL.Model.iterate() -&gt; ()"
+                  moduleName = "GoL"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/matthewgoodhart/Desktop/Projects/GoL/GoL/Model.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "179"
+                  endingLineNumber = "179"
+                  offsetFromSymbolStart = "3852">
+               </Location>
+               <Location
+                  uuid = "25F43D58-0051-45D2-9442-55C97FEBC740 - 99b112c4789d4475"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "GoL.Model.iterate() -&gt; ()"
+                  moduleName = "GoL"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/matthewgoodhart/Desktop/Projects/GoL/GoL/Model.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "180"
+                  endingLineNumber = "180"
+                  offsetFromSymbolStart = "3852">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

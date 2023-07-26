@@ -13,11 +13,19 @@ struct BottomButton: View {
     
     var body: some View {
         if viewModel.liveStartingSquares.isEmpty {
-            Button() {
-                viewModel.generateRandomSeed()
-            } label : {
-                Text("Seed")
-                Image(systemName: "bolt")
+            HStack(alignment: .center, spacing: (UIScreen.main.bounds.width/4)) {
+                Button() {
+                    viewModel.generateRandomSeed()
+                } label : {
+                    Text("Random")
+                    Image(systemName: "bolt")
+                }
+                Button() {
+                    viewModel.generate15seed()
+                } label : {
+                    Text("Penta-Decathalon")
+                    Image(systemName: "goforward.15")
+                }
             }
         } else if !viewModel.isRunning {
             Button() {

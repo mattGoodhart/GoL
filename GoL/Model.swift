@@ -25,7 +25,7 @@ class Model: ObservableObject {
         guard isRunning else {
             return
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { // for a 10x10 grid, the loop needs to be slowed to see what's going on
+        DispatchQueue.main.asyncAfter(deadline: .now()) { // if the grid is smaller than 20x20, the loop can be slowed here by increasing the deadline a bit
             self.iterate()
             self.runGame()
         }
@@ -40,6 +40,41 @@ class Model: ObservableObject {
             }
         }
         return squares
+    }
+    
+    func generate15seed() {
+        var seed: [Square] = []
+        var liveSquares: [Square] = []
+        
+        let liveSquarePoints: [SquarePoint] =
+        [SquarePoint(x: 5, y: 9),
+         SquarePoint(x: 6, y: 9),
+         SquarePoint(x: 7, y: 8),
+         SquarePoint(x: 7, y: 10),
+         SquarePoint(x: 8, y: 9),
+         SquarePoint(x: 9, y: 9),
+         SquarePoint(x: 10, y: 9),
+         SquarePoint(x: 11, y: 9),
+         SquarePoint(x: 12, y: 8),
+         SquarePoint(x: 12, y: 10),
+         SquarePoint(x: 13, y: 9),
+         SquarePoint(x: 14, y: 9)]
+        
+        for liveSquarePoint in liveSquarePoints {
+            liveSquares.append(Square(xPosition: liveSquarePoint.x, yPosition: liveSquarePoint.y, isAlive: true))
+        }
+        
+        liveStartingSquares = liveSquares
+        seed = readyArrayOfSquares()
+        
+        //Swap the chosen living squares into the "ready" array
+        for startingSquare in liveSquares {
+            if let index = seed.firstIndex(where: {($0.xPosition == startingSquare.xPosition) && ($0.yPosition == startingSquare.yPosition)}) {
+                seed[index] = Square(xPosition: startingSquare.xPosition, yPosition: startingSquare.yPosition, isAlive: true)
+            }
+        }
+        squareArray = seed
+        isSeeded = true
     }
     
     func generateRandomSeed() {
@@ -160,5 +195,8 @@ enum GameState {
     case stopped
 }
 
-
+struct SquarePoint {
+    let x: Int
+    let y: Int
+}
 

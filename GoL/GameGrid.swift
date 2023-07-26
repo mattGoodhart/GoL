@@ -14,12 +14,9 @@ struct GameGrid: View {
     }
     
     var viewModel: Model
+    var squares: [Square] = Model.shared.squareArray
     
-    var rowsCount = 10
-    var columnsCount = 10
-    var squares: [Square] = Model.shared.squareArray // this is updating, but changes to this are not triggering a redraw...
-    //  let readyStateSquareArray: [Square] = Model.shared.readyArrayOfSquares()
-    
+   
     var body: some View {
         
         Grid(alignment: .topLeading, horizontalSpacing: 0, verticalSpacing: 0) {

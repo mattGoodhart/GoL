@@ -13,46 +13,42 @@ struct Controls: View {
         self.viewModel = model
     }
     
-    var viewModel: Model
+    @ObservedObject var viewModel: Model
+    
+    let spacing = (UIScreen.main.bounds.width/3)
     
     var body: some View {
-        HStack(alignment: .center, spacing: 50) {
-            switch viewModel.gameState {
-            case .running:
+        HStack(alignment:.center, spacing: spacing ) {
+            
+            //Button 1
+            if viewModel.isRunning {
                 Button() {
-                    viewModel.gameState = .stopped
                     print("Pause Button Tapped")
+                    viewModel.isRunning = false
+                    viewModel.gameState = .stopped
                 } label: {
                     Text("Pause")
                     Image(systemName: "pause.fill")
                 }
-                
-            case  .stopped, .ready, .iterating:
+            } else {
                 Button() {
-                    viewModel.startGame()
-                    print("Start Button tapped")
+                    print("Run Button tapped")
+                    viewModel.isRunning = true
+                    viewModel.iterate()  // Putting iterate here before rungame() is a hacky way to get around the 0.5 second wait for an iteration after hitting run
+                    viewModel.runGame()
                 } label: {
-                    Text("Start")
+                    Text("Run")
                     Image(systemName: "play.fill")
                 }
             }
-            
-            if (viewModel.gameState != .running) {
-                
+
+            //Button 2
+            if !viewModel.isRunning {
                 Button() {
                     viewModel.iterate()
                 } label: {
                     Text("Advance")
                     Image(systemName: "forward.end.circle.fill")
-                }
-            }
-            if (viewModel.gameState == .stopped) {
-                Button() {
-                    print("reset button hit")
-                    viewModel.resetGame()
-                } label: {
-                    Text("Reset")
-                    Image(systemName: "restart.circle.fill")
                 }
             }
         }

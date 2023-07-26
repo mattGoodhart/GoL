@@ -31,7 +31,7 @@ struct Square: View {
     
     var body: some View {
         let screenWidth = UIScreen.main.bounds.width
-        let numberOfColumns = 10
+        let numberOfColumns = 20
         let squareWidth = screenWidth / CGFloat(numberOfColumns + 1)
         
         Rectangle()

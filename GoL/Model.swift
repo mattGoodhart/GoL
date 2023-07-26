@@ -19,7 +19,7 @@ class Model: ObservableObject {
     @Published var iterationNumber: Int = 0 
     
     var isGameOver: Bool = false
-    var gridSize: Int = 10
+    var gridSize: Int = 20
     
     func runGame() {
         guard isRunning else {

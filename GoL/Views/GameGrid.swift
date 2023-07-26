@@ -15,9 +15,9 @@ struct GameGrid: View {
     var body: some View {
         
         Grid(alignment: .topLeading, horizontalSpacing: 0, verticalSpacing: 0) {
-            ForEach(0..<10) { row in
+            ForEach(0..<20) { row in
                 GridRow(alignment: .firstTextBaseline) {
-                    ForEach(0..<10) { column in
+                    ForEach(0..<20) { column in
                         viewModel.squareArray.first { $0.xPosition == row && $0.yPosition == column }
                             .id(UUID())
                     }

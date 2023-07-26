@@ -1,5 +1,5 @@
 //
-//  Controls.swift
+//  TopControls.swift
 //  GoL
 //
 //  Created by Matthew Goodhart on 7/25/23.
@@ -7,14 +7,9 @@
 
 import SwiftUI
 
-struct Controls: View {
-    
-    init(model: Model) {
-        self.viewModel = model
-    }
-    
+struct TopControls: View {
+
     @ObservedObject var viewModel: Model
-    
     let spacing = (UIScreen.main.bounds.width/3)
     
     var body: some View {
@@ -34,7 +29,7 @@ struct Controls: View {
                 Button() {
                     print("Run Button tapped")
                     viewModel.isRunning = true
-                    viewModel.iterate()  // Putting iterate here before rungame() is a hacky way to get around the 0.5 second wait for an iteration after hitting run
+                    viewModel.iterate()  // Putting iterate here before rungame() is a way to circumvent the initial wait for an iteration after hitting run
                     viewModel.runGame()
                 } label: {
                     Text("Run")
@@ -54,5 +49,3 @@ struct Controls: View {
         }
     }
 }
-
-

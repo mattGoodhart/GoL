@@ -11,26 +11,21 @@ class Model: ObservableObject {
     
     static let shared = Model()
     
-    var instructionalText: String {
-        switch gameState {
-        case .ready: return "Enter a Pattern or Generate Seed to Begin"
-        default: return ""
-        }
-    }
-    
     @Published var isRunning: Bool = false // Flag that indicates if game is autorunning
+    @Published var isSeeded: Bool = false // Indicates if the user chose to generate a random seed
     @Published var liveStartingSquares: [Square] = [] //the squares chosen by the user before starting the game
-    @Published var gridSize: Int = 10
     @Published var squareArray: [Square] = [] // The array sent to the UI at the end of iteration. Updating this should trigger a grid redraw
-    @Published var gameState: GameState  = .ready //Updating this should update button states and text in UI
-    @Published var iterationNumber: Int = 0 // Updating should increment the generation counter.
+    @Published var gameState: GameState  = .ready
+    @Published var iterationNumber: Int = 0 
+    
+    var isGameOver: Bool = false
+    var gridSize: Int = 10
     
     func runGame() {
-        
         guard isRunning else {
             return
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { // this makes pause laggy
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { // for a 10x10 grid, the loop needs to be slowed to see what's going on
             self.iterate()
             self.runGame()
         }
@@ -44,16 +39,18 @@ class Model: ObservableObject {
                 squares.append(Square(xPosition: row, yPosition: column))
             }
         }
-        
         return squares
     }
     
     func generateRandomSeed() {
+        var seed: [Square] = []
+        var aliveSquaresInSeed: [Square] = []
+        
+        resetGame()
         guard liveStartingSquares.isEmpty else {
+            print("Live starting squares wasnt empty")
             return
         }
-        
-        var seed: [Square] = []
         
         for row in 0..<gridSize {
             for column in 0..<gridSize {
@@ -61,11 +58,13 @@ class Model: ObservableObject {
             }
         }
         
-        let aliveSquaresInSeed = seed.filter { $0.isAlive == true }
+        aliveSquaresInSeed = seed.filter { $0.isAlive == true }
+        
         for square in aliveSquaresInSeed {
             liveStartingSquares.append(square)
         }
         squareArray = seed
+        isSeeded = true
     }
     
     func pauseGame() {
@@ -81,15 +80,17 @@ class Model: ObservableObject {
         squareArray = readyArrayOfSquares()
         gameState = .ready
         iterationNumber = 0
+        isSeeded = false
     }
     
+    //MARK: Iterate
     func iterate() {
-        var bufferArrayOfSquares: [Square] = [] //the array of Squares to process
-        var updatedArrayOfSquares: [Square] = [] //Squares after processing
-        var livingSquaresAfterUpdate: [Square] = [] //only the living Squares after last iteration
+        var bufferArrayOfSquares: [Square] = []
+        var updatedArrayOfSquares: [Square] = []
+        var livingSquaresAfterUpdate: [Square] = []
         var aliveNeighborsArray: [Square] = []
     
-        
+
         bufferArrayOfSquares = squareArray // this squareArray is initialized with a blank Square array in GoLApp
         
         if iterationNumber == 0 {
@@ -98,7 +99,8 @@ class Model: ObservableObject {
                 resetGame()
                 return
             }
-            //Swap the chosen living squares into the ready grid (all squares dead)
+            
+            //Swap the chosen living squares into the "ready" array (all squares dead)
             for startingSquare in liveStartingSquares {
                 if let index = bufferArrayOfSquares.firstIndex(where: {($0.xPosition == startingSquare.xPosition) && ($0.yPosition == startingSquare.yPosition)}) {
                     bufferArrayOfSquares[index] = Square(xPosition: startingSquare.xPosition, yPosition: startingSquare.yPosition, isAlive: true)
@@ -108,16 +110,16 @@ class Model: ObservableObject {
         
         gameState = .iterating
         
+        //check for neighbors
         for square in bufferArrayOfSquares {
             if iterationNumber == 0 {
-                //check for neighbors to the starting squares
                 aliveNeighborsArray = liveStartingSquares.filter { $0.isNeighbor(to: square) }
             } else {
-                //check for neighbors of last iteration
                 let aliveFromLastIteration = squareArray.filter { $0.isAlive }
                 aliveNeighborsArray = aliveFromLastIteration.filter { $0.isNeighbor(to: square) }
             }
-            //Apply the rules and build a new Grid of Squares to display
+            
+            //Apply the game of life rules and build a new array of Squares to display
             switch (square.isAlive, aliveNeighborsArray.count) {
                 // Any live cell with two or three live neighbors lives on to the next generation.
             case (true, 2), (true, 3):
@@ -138,19 +140,11 @@ class Model: ObservableObject {
                 }
             }
         }
-        // DEBUG
-        var positionsOfLivingSquaresAfterUpdate: [String] = []
-        for square in livingSquaresAfterUpdate {
-            positionsOfLivingSquaresAfterUpdate.append("(\(square.xPosition), \(square.yPosition))")
-        }
-        print(positionsOfLivingSquaresAfterUpdate)
-        // End DEBUG
         
         squareArray = updatedArrayOfSquares
-        
         iterationNumber += 1
         
-        let isGameOver: Bool = livingSquaresAfterUpdate.count == 0
+        isGameOver = livingSquaresAfterUpdate.count == 0
         if isGameOver, isRunning {
             isRunning.toggle()
         } else {
@@ -159,6 +153,7 @@ class Model: ObservableObject {
     }
 }
 
+//MARK: GameState
 enum GameState {
     case ready
     case iterating

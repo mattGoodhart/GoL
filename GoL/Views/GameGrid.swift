@@ -8,15 +8,10 @@
 import SwiftUI
 
 struct GameGrid: View {
-    
-    init(viewModel: Model) {
-        self.viewModel = viewModel
-    }
-    
+
     var viewModel: Model
     var squares: [Square] = Model.shared.squareArray
     
-   
     var body: some View {
         
         Grid(alignment: .topLeading, horizontalSpacing: 0, verticalSpacing: 0) {
@@ -24,7 +19,7 @@ struct GameGrid: View {
                 GridRow(alignment: .firstTextBaseline) {
                     ForEach(0..<10) { column in
                         viewModel.squareArray.first { $0.xPosition == row && $0.yPosition == column }
-                            .id(UUID()) // should maybe change data structure to avoid this?
+                            .id(UUID())
                     }
                 }
             }

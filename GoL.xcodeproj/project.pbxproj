@@ -14,7 +14,9 @@
 		A2FECF5C2A6B6E6100930BE0 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FECF5B2A6B6E6100930BE0 /* Model.swift */; };
 		A2FECF5E2A6E000600930BE0 /* Square.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FECF5D2A6E000600930BE0 /* Square.swift */; };
 		A2FECF602A6EF92A00930BE0 /* GameGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FECF5F2A6EF92A00930BE0 /* GameGrid.swift */; };
-		A2FECF622A704FB100930BE0 /* Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FECF612A704FB100930BE0 /* Controls.swift */; };
+		A2FECF622A704FB100930BE0 /* TopControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FECF612A704FB100930BE0 /* TopControls.swift */; };
+		A2FECF662A714B9100930BE0 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FECF652A714B9100930BE0 /* InfoView.swift */; };
+		A2FECF682A7187E800930BE0 /* BottomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FECF672A7187E800930BE0 /* BottomButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,7 +28,9 @@
 		A2FECF5B2A6B6E6100930BE0 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		A2FECF5D2A6E000600930BE0 /* Square.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Square.swift; sourceTree = "<group>"; };
 		A2FECF5F2A6EF92A00930BE0 /* GameGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameGrid.swift; sourceTree = "<group>"; };
-		A2FECF612A704FB100930BE0 /* Controls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controls.swift; sourceTree = "<group>"; };
+		A2FECF612A704FB100930BE0 /* TopControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopControls.swift; sourceTree = "<group>"; };
+		A2FECF652A714B9100930BE0 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		A2FECF672A7187E800930BE0 /* BottomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,11 +64,8 @@
 			isa = PBXGroup;
 			children = (
 				A2FECF4D2A6989D400930BE0 /* GoLApp.swift */,
-				A2FECF612A704FB100930BE0 /* Controls.swift */,
-				A2FECF4F2A6989D400930BE0 /* ContentView.swift */,
-				A2FECF5F2A6EF92A00930BE0 /* GameGrid.swift */,
+				A2FECF642A714B7500930BE0 /* Views */,
 				A2FECF5B2A6B6E6100930BE0 /* Model.swift */,
-				A2FECF5D2A6E000600930BE0 /* Square.swift */,
 				A2FECF512A6989D500930BE0 /* Assets.xcassets */,
 				A2FECF532A6989D500930BE0 /* Preview Content */,
 			);
@@ -77,6 +78,19 @@
 				A2FECF542A6989D500930BE0 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		A2FECF642A714B7500930BE0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A2FECF612A704FB100930BE0 /* TopControls.swift */,
+				A2FECF5D2A6E000600930BE0 /* Square.swift */,
+				A2FECF4F2A6989D400930BE0 /* ContentView.swift */,
+				A2FECF5F2A6EF92A00930BE0 /* GameGrid.swift */,
+				A2FECF652A714B9100930BE0 /* InfoView.swift */,
+				A2FECF672A7187E800930BE0 /* BottomButton.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,11 +164,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2FECF5E2A6E000600930BE0 /* Square.swift in Sources */,
-				A2FECF622A704FB100930BE0 /* Controls.swift in Sources */,
+				A2FECF622A704FB100930BE0 /* TopControls.swift in Sources */,
 				A2FECF5C2A6B6E6100930BE0 /* Model.swift in Sources */,
 				A2FECF602A6EF92A00930BE0 /* GameGrid.swift in Sources */,
 				A2FECF502A6989D400930BE0 /* ContentView.swift in Sources */,
 				A2FECF4E2A6989D400930BE0 /* GoLApp.swift in Sources */,
+				A2FECF682A7187E800930BE0 /* BottomButton.swift in Sources */,
+				A2FECF662A714B9100930BE0 /* InfoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,8 +304,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -316,8 +332,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

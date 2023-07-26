@@ -13,7 +13,7 @@ struct Square: View {
     
     let xPosition: Int
     let yPosition: Int
-    @State var isAlive: Bool = false // is @State the right binding here, since the Model will also update this property ?
+    @State var isAlive: Bool = false
     
     public func isNeighbor(to square: Square) -> Bool {
         
@@ -39,11 +39,12 @@ struct Square: View {
             .foregroundColor(isAlive == false ? .gray : Color("MercuryLime") )
             .border(.black)
             .onTapGesture {
-                if viewModel.gameState == .ready {
+                if viewModel.gameState == .ready, !viewModel.isSeeded {
                     //if Square is dead when clicked, add it to the liveStartingSquaresArray
                     if !self.isAlive {
                         viewModel.liveStartingSquares.append(Square(xPosition: xPosition, yPosition: yPosition, isAlive: true))
-                    } else {
+                    }
+                    else {
                         //otherwise find the liveStartingSquare matching the tapped square, then remove it from liveStartingSquares
                         let squareIndex = viewModel.liveStartingSquares.firstIndex { ($0.xPosition == self.xPosition) && ($0.yPosition == self.yPosition) }
                         
@@ -57,3 +58,4 @@ struct Square: View {
             }
     }
 }
+

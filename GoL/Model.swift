@@ -11,12 +11,12 @@ class Model: ObservableObject {
     
     static let shared = Model()
     
-    @Published var isRunning: Bool = false // Flag that indicates if game is autorunning
-    @Published var isSeeded: Bool = false // Indicates if the user chose to generate a random seed
-    @Published var liveStartingSquares: [Square] = [] //the squares chosen by the user before starting the game
     @Published var squareArray: [Square] = [] // The array sent to the UI at the end of iteration. Updating this should trigger a grid redraw
+    @Published var liveStartingSquares: [Square] = [] //the squares chosen by the user before starting the game
+    @Published var isRunning: Bool = false // Flag that indicates if game is autorunning
     @Published var gameState: GameState  = .ready
-    @Published var iterationNumber: Int = 0 
+    @Published private(set) var isSeeded: Bool = false // Indicates if the user chose to generate a random seed
+    @Published private(set) var iterationNumber: Int = 0
     
     var isGameOver: Bool = false
     var gridSize: Int = 20
@@ -195,6 +195,7 @@ enum GameState {
     case stopped
 }
 
+//MARK: SquarePoint
 struct SquarePoint {
     let x: Int
     let y: Int

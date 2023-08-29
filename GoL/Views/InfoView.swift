@@ -19,10 +19,9 @@ struct InfoView: View {
                 .background(.gray)
             
             VStack(alignment: .center, spacing: 40) {
-                Text("Created by Matthew Goodhart for")
+                Text("Created by Matthew Goodhart")
                     .font(.title2)
                     .foregroundColor(.white)
-                Image("merc")
                     .padding()
                 Text("with Some Inspiration From:")
                     .font(.headline)

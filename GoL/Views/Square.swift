@@ -36,7 +36,7 @@ struct Square: View {
         
         Rectangle()
             .frame(width: squareWidth, height: squareWidth, alignment: .center)
-            .foregroundColor(isAlive == false ? .gray : Color("MercuryLime") )
+            .foregroundColor(isAlive == false ? .gray : .clear )
             .border(.black)
             .onTapGesture {
                 if viewModel.gameState == .ready, !viewModel.isSeeded {

@@ -20,7 +20,7 @@ struct ContentView: View {
         
         NavigationView {
             ZStack {
-                LinearGradient(colors: [Color("MercuryLime"), .white], startPoint: .topLeading, endPoint: .bottomTrailing)
+                LinearGradient(colors: [Color("FancyLime"), .white], startPoint: .topLeading, endPoint: .bottomTrailing)
                     .ignoresSafeArea()
                 VStack(alignment: .center) {
                     Spacer()
